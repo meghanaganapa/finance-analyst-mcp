@@ -3,6 +3,7 @@
 Written before the assistant existed. Report-only: never tune on these. Usage: python scripts/build_hard_set.py
 """
 import json
+
 REV="SUM(ol.quantity * ol.unit_price * (1 - ol.discount))"
 S="FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id"
 C="JOIN customers c ON c.customer_id = o.customer_id"

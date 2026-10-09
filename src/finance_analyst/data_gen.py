@@ -272,3 +272,9 @@ def generate(path: str | Path, seed: int = 42) -> Path:
     con.commit()
     con.close()
     return path
+
+
+def ensure_db(path: str | Path, seed: int = 42) -> Path:
+    """Generate the database on first use so every entry point works straight after install."""
+    path = Path(path)
+    return path if path.exists() else generate(path, seed)

@@ -1,0 +1,260 @@
+{
+  "backend": "offline",
+  "split": "hard",
+  "n": 25,
+  "execution_accuracy": {
+    "value": 0.16,
+    "ci95": [
+      0.04,
+      0.32
+    ],
+    "n": 25
+  },
+  "answered_rate": 0.64,
+  "auto_answer_rate": 0.2,
+  "auto_answer_accuracy": {
+    "value": 0.8,
+    "ci95": [
+      0.4,
+      1.0
+    ],
+    "n": 5
+  },
+  "flagged_for_review_rate": 0.44,
+  "abstain_rate": 0.36,
+  "silent_error_rate": 0.04,
+  "misses_caught_by_review": 0.952,
+  "accuracy_by_family": {
+    "hard": 0.16
+  },
+  "llm_tokens": {
+    "input": 0,
+    "output": 0
+  },
+  "llm_cost_usd_total": 0.0,
+  "llm_cost_usd_per_question": 0.0,
+  "details": [
+    {
+      "id": "hard-01",
+      "question": "how much did we make last year",
+      "status": "abstained",
+      "correct": false,
+      "sql": null,
+      "review_reasons": []
+    },
+    {
+      "id": "hard-02",
+      "question": "rev for the north in h1 2025",
+      "status": "abstained",
+      "correct": false,
+      "sql": null,
+      "review_reasons": []
+    },
+    {
+      "id": "hard-03",
+      "question": "Which region missed its 2025 revenue target by the most?",
+      "status": "needs_review",
+      "correct": false,
+      "sql": "SELECT ROUND(SUM(ol.quantity * ol.unit_price * (1 - ol.discount)), 2) AS revenue FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2025'",
+      "review_reasons": [
+        "Parts of the question were not understood: missed, its, target"
+      ]
+    },
+    {
+      "id": "hard-04",
+      "question": "What % of our 2025 revenue came from Enterprise customers?",
+      "status": "needs_review",
+      "correct": false,
+      "sql": "SELECT ROUND(SUM(ol.quantity * ol.unit_price * (1 - ol.discount)), 2) AS revenue FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id JOIN customers c ON c.customer_id = o.customer_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2025' AND c.segment = 'Enterprise'",
+      "review_reasons": [
+        "Parts of the question were not understood: came"
+      ]
+    },
+    {
+      "id": "hard-05",
+      "question": "By how many dollars did Technology revenue change from 2024 to 2025?",
+      "status": "needs_review",
+      "correct": false,
+      "sql": "SELECT ROUND(SUM(ol.quantity * ol.unit_price * (1 - ol.discount)), 2) AS revenue FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id JOIN products p ON p.product_id = ol.product_id WHERE o.status = 'completed' AND p.category = 'Technology'",
+      "review_reasons": [
+        "Parts of the question were not understood: dollars, change"
+      ]
+    },
+    {
+      "id": "hard-06",
+      "question": "best selling product last quarter by revenue",
+      "status": "needs_review",
+      "correct": false,
+      "sql": "SELECT ROUND(SUM(ol.quantity * ol.unit_price * (1 - ol.discount)), 2) AS revenue FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id WHERE o.status = 'completed'",
+      "review_reasons": [
+        "Parts of the question were not understood: selling, last, quarter"
+      ]
+    },
+    {
+      "id": "hard-07",
+      "question": "How many customers placed at least one order in 2025?",
+      "status": "abstained",
+      "correct": false,
+      "sql": null,
+      "review_reasons": []
+    },
+    {
+      "id": "hard-08",
+      "question": "What's our return rate for 2025?",
+      "status": "abstained",
+      "correct": false,
+      "sql": null,
+      "review_reasons": []
+    },
+    {
+      "id": "hard-09",
+      "question": "cancelled orders in q2 2024 - how many",
+      "status": "needs_review",
+      "correct": false,
+      "sql": "SELECT COUNT(DISTINCT o.order_id) AS orders FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id WHERE o.status = 'completed' AND o.order_date BETWEEN '2024-04-01' AND '2024-06-30'",
+      "review_reasons": [
+        "Parts of the question were not understood: cancelled"
+      ]
+    },
+    {
+      "id": "hard-10",
+      "question": "Which customers haven't ordered anything since September 2025?",
+      "status": "abstained",
+      "correct": false,
+      "sql": null,
+      "review_reasons": []
+    },
+    {
+      "id": "hard-11",
+      "question": "Total spend on software across all departments in 2025",
+      "status": "abstained",
+      "correct": false,
+      "sql": null,
+      "review_reasons": []
+    },
+    {
+      "id": "hard-12",
+      "question": "Marketing spend Q4 2025 vs Q4 2024",
+      "status": "abstained",
+      "correct": false,
+      "sql": null,
+      "review_reasons": []
+    },
+    {
+      "id": "hard-13",
+      "question": "Which month in 2025 had the highest sales?",
+      "status": "needs_review",
+      "correct": false,
+      "sql": "SELECT ROUND(SUM(ol.quantity * ol.unit_price * (1 - ol.discount)), 2) AS revenue FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2025'",
+      "review_reasons": [
+        "Parts of the question were not understood: had"
+      ]
+    },
+    {
+      "id": "hard-14",
+      "question": "open receivables that aren't overdue yet",
+      "status": "needs_review",
+      "correct": false,
+      "sql": "SELECT ROUND(SUM(i.amount - i.amount_paid), 2) AS overdue_amount FROM invoices i WHERE i.status = 'overdue'",
+      "review_reasons": [
+        "Parts of the question were not understood: open, receivables, that, aren, t, yet"
+      ]
+    },
+    {
+      "id": "hard-15",
+      "question": "Gross profit for furniture in 2025",
+      "status": "answered",
+      "correct": true,
+      "sql": "SELECT ROUND(SUM(ol.quantity * (ol.unit_price * (1 - ol.discount) - p.unit_cost)), 2) AS gross_profit FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id JOIN products p ON p.product_id = ol.product_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2025' AND p.category = 'Furniture'",
+      "review_reasons": []
+    },
+    {
+      "id": "hard-16",
+      "question": "Top 3 products in the West by revenue for 2025",
+      "status": "answered",
+      "correct": true,
+      "sql": "SELECT p.product_name, ROUND(SUM(ol.quantity * ol.unit_price * (1 - ol.discount)), 2) AS revenue FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id JOIN products p ON p.product_id = ol.product_id JOIN customers c ON c.customer_id = o.customer_id JOIN regions r ON r.region_id = c.region_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2025' AND r.region_name = 'West' GROUP BY p.product_id, p.product_name ORDER BY revenue DESC LIMIT 3",
+      "review_reasons": []
+    },
+    {
+      "id": "hard-17",
+      "question": "How much budget did the East have for 2025?",
+      "status": "answered",
+      "correct": true,
+      "sql": "WITH a AS (SELECT c.region_id, SUM(ol.quantity * ol.unit_price * (1 - ol.discount)) AS rev FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id JOIN customers c ON c.customer_id = o.customer_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2025' GROUP BY c.region_id), b AS (SELECT region_id, SUM(revenue_budget) AS bud FROM budgets WHERE substr(month, 1, 4) = '2025' GROUP BY region_id) SELECT r.region_name, ROUND(a.rev, 2) AS revenue, ROUND(b.bud, 2) AS budget, ROUND(a.rev - b.bud, 2) AS variance FROM regions r JOIN a ON a.region_id = r.region_id JOIN b ON b.region_id = r.region_id WHERE r.region_name = 'East' ORDER BY variance",
+      "review_reasons": []
+    },
+    {
+      "id": "hard-18",
+      "question": "Which segment has the highest average order value in 2025?",
+      "status": "answered",
+      "correct": false,
+      "sql": "SELECT ROUND(SUM(ol.quantity * ol.unit_price * (1 - ol.discount)) / COUNT(DISTINCT o.order_id), 2) AS avg_order_value FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2025'",
+      "review_reasons": []
+    },
+    {
+      "id": "hard-19",
+      "question": "Revenue from Safety Equipment in Q3 2025 in the South",
+      "status": "answered",
+      "correct": true,
+      "sql": "SELECT ROUND(SUM(ol.quantity * ol.unit_price * (1 - ol.discount)), 2) AS revenue FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id JOIN products p ON p.product_id = ol.product_id JOIN customers c ON c.customer_id = o.customer_id JOIN regions r ON r.region_id = c.region_id WHERE o.status = 'completed' AND o.order_date BETWEEN '2025-07-01' AND '2025-09-30' AND r.region_name = 'South' AND p.category = 'Safety Equipment'",
+      "review_reasons": []
+    },
+    {
+      "id": "hard-20",
+      "question": "operating expenses as a percentage of revenue, 2025",
+      "status": "needs_review",
+      "correct": false,
+      "sql": "SELECT ROUND(SUM(e.amount), 2) AS expenses FROM expenses e WHERE substr(e.expense_date, 1, 4) = '2025'",
+      "review_reasons": [
+        "Parts of the question were not understood: operating, as"
+      ]
+    },
+    {
+      "id": "hard-21",
+      "question": "number of invoices overdue by more than 90 days",
+      "status": "needs_review",
+      "correct": false,
+      "sql": "SELECT ROUND(SUM(i.amount - i.amount_paid), 2) AS overdue_amount FROM invoices i WHERE i.status = 'overdue'",
+      "review_reasons": [
+        "Parts of the question were not understood: more, than, days"
+      ]
+    },
+    {
+      "id": "hard-22",
+      "question": "What's the average invoice amount for Enterprise customers?",
+      "status": "abstained",
+      "correct": false,
+      "sql": null,
+      "review_reasons": []
+    },
+    {
+      "id": "hard-23",
+      "question": "Show me 2025 revenue by quarter",
+      "status": "needs_review",
+      "correct": false,
+      "sql": "SELECT ROUND(SUM(ol.quantity * ol.unit_price * (1 - ol.discount)), 2) AS revenue FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2025'",
+      "review_reasons": [
+        "Parts of the question were not understood: quarter"
+      ]
+    },
+    {
+      "id": "hard-24",
+      "question": "how many units of the ergonomic chair did we sell in 2025",
+      "status": "needs_review",
+      "correct": false,
+      "sql": "SELECT SUM(ol.quantity) AS units FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2025'",
+      "review_reasons": [
+        "Parts of the question were not understood: ergonomic, chair, sell"
+      ]
+    },
+    {
+      "id": "hard-25",
+      "question": "Which customer has the largest single unpaid invoice?",
+      "status": "abstained",
+      "correct": false,
+      "sql": null,
+      "review_reasons": []
+    }
+  ]
+}

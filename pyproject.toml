@@ -1,0 +1,47 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "finance-analyst-mcp"
+version = "0.1.0"
+description = "MCP server and assistant that answers finance questions over a SQL database safely: read-only, validated SQL, row limits, human review and an honest evaluation."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "Meghana Ganapa" }]
+dependencies = [
+  "pydantic>=2.6",
+  "sqlglot>=25",
+  "fastapi>=0.110",
+  "uvicorn>=0.29",
+  "mcp>=2.0",
+]
+
+[project.optional-dependencies]
+anthropic = ["anthropic>=0.40"]
+openai = ["openai>=1.40"]
+dev = ["pytest>=8", "httpx>=0.27", "ruff>=0.5"]
+
+[project.scripts]
+finance-analyst = "finance_analyst.cli:main"
+finance-analyst-eval = "finance_analyst.evaluate:main"
+finance-analyst-mcp = "finance_analyst.mcp_server:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+
+[tool.ruff.lint.per-file-ignores]
+# Gold SQL is kept on one line per question so each case reads as a single record.
+"scripts/*" = ["E501", "E731"]

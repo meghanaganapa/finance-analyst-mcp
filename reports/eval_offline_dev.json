@@ -1,0 +1,563 @@
+{
+  "backend": "offline",
+  "split": "dev",
+  "n": 64,
+  "execution_accuracy": {
+    "value": 1.0,
+    "ci95": [
+      1.0,
+      1.0
+    ],
+    "n": 64
+  },
+  "answered_rate": 1.0,
+  "auto_answer_rate": 1.0,
+  "auto_answer_accuracy": {
+    "value": 1.0,
+    "ci95": [
+      1.0,
+      1.0
+    ],
+    "n": 64
+  },
+  "flagged_for_review_rate": 0.0,
+  "abstain_rate": 0.0,
+  "silent_error_rate": 0.0,
+  "misses_caught_by_review": 1.0,
+  "accuracy_by_family": {
+    "aov_segment": 1.0,
+    "bottom_products_units": 1.0,
+    "budget_vs_actual_region": 1.0,
+    "category_revenue_in_region": 1.0,
+    "expenses_by_department": 1.0,
+    "margin_pct_by_category": 1.0,
+    "monthly_revenue": 1.0,
+    "order_count_segment": 1.0,
+    "overdue_total": 1.0,
+    "revenue_by_region": 1.0,
+    "revenue_growth": 1.0,
+    "top_customers_quarter": 1.0,
+    "top_overdue_customers": 1.0,
+    "total_revenue": 1.0
+  },
+  "llm_tokens": {
+    "input": 0,
+    "output": 0
+  },
+  "llm_cost_usd_total": 0.0,
+  "llm_cost_usd_per_question": 0.0,
+  "details": [
+    {
+      "id": "dev-total_revenue-p1-1",
+      "question": "What was total revenue in 2025?",
+      "status": "answered",
+      "correct": true,
+      "sql": "SELECT ROUND(SUM(ol.quantity * ol.unit_price * (1 - ol.discount)), 2) AS revenue FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2025'",
+      "review_reasons": []
+    },
+    {
+      "id": "dev-total_revenue-p1-2",
+      "question": "What was total revenue in 2024?",
+      "status": "answered",
+      "correct": true,
+      "sql": "SELECT ROUND(SUM(ol.quantity * ol.unit_price * (1 - ol.discount)), 2) AS revenue FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2024'",
+      "review_reasons": []
+    },
+    {
+      "id": "dev-total_revenue-p2-1",
+      "question": "Show me our 2025 revenue.",
+      "status": "answered",
+      "correct": true,
+      "sql": "SELECT ROUND(SUM(ol.quantity * ol.unit_price * (1 - ol.discount)), 2) AS revenue FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2025'",
+      "review_reasons": []
+    },
+    {
+      "id": "dev-total_revenue-p2-2",
+      "question": "Show me our 2024 revenue.",
+      "status": "answered",
+      "correct": true,
+      "sql": "SELECT ROUND(SUM(ol.quantity * ol.unit_price * (1 - ol.discount)), 2) AS revenue FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2024'",
+      "review_reasons": []
+    },
+    {
+      "id": "dev-revenue_by_region-p1-1",
+      "question": "Revenue by region for 2025",
+      "status": "answered",
+      "correct": true,
+      "sql": "SELECT r.region_name, ROUND(SUM(ol.quantity * ol.unit_price * (1 - ol.discount)), 2) AS revenue FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id JOIN customers c ON c.customer_id = o.customer_id JOIN regions r ON r.region_id = c.region_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2025' GROUP BY r.region_name",
+      "review_reasons": []
+    },
+    {
+      "id": "dev-revenue_by_region-p1-2",
+      "question": "Revenue by region for 2024",
+      "status": "answered",
+      "correct": true,
+      "sql": "SELECT r.region_name, ROUND(SUM(ol.quantity * ol.unit_price * (1 - ol.discount)), 2) AS revenue FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id JOIN customers c ON c.customer_id = o.customer_id JOIN regions r ON r.region_id = c.region_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2024' GROUP BY r.region_name",
+      "review_reasons": []
+    },
+    {
+      "id": "dev-revenue_by_region-p2-1",
+      "question": "Break down 2025 revenue per region.",
+      "status": "answered",
+      "correct": true,
+      "sql": "SELECT r.region_name, ROUND(SUM(ol.quantity * ol.unit_price * (1 - ol.discount)), 2) AS revenue FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id JOIN customers c ON c.customer_id = o.customer_id JOIN regions r ON r.region_id = c.region_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2025' GROUP BY r.region_name",
+      "review_reasons": []
+    },
+    {
+      "id": "dev-revenue_by_region-p2-2",
+      "question": "Break down 2024 revenue per region.",
+      "status": "answered",
+      "correct": true,
+      "sql": "SELECT r.region_name, ROUND(SUM(ol.quantity * ol.unit_price * (1 - ol.discount)), 2) AS revenue FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id JOIN customers c ON c.customer_id = o.customer_id JOIN regions r ON r.region_id = c.region_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2024' GROUP BY r.region_name",
+      "review_reasons": []
+    },
+    {
+      "id": "dev-top_customers_quarter-p1-1",
+      "question": "Top 10 customers by revenue in Q4 2025",
+      "status": "answered",
+      "correct": true,
+      "sql": "SELECT c.customer_name, ROUND(SUM(ol.quantity * ol.unit_price * (1 - ol.discount)), 2) AS revenue FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id JOIN customers c ON c.customer_id = o.customer_id WHERE o.status = 'completed' AND o.order_date BETWEEN '2025-10-01' AND '2025-12-31' GROUP BY c.customer_id, c.customer_name ORDER BY revenue DESC LIMIT 10",
+      "review_reasons": []
+    },
+    {
+      "id": "dev-top_customers_quarter-p1-2",
+      "question": "Top 10 customers by revenue in Q2 2024",
+      "status": "answered",
+      "correct": true,
+      "sql": "SELECT c.customer_name, ROUND(SUM(ol.quantity * ol.unit_price * (1 - ol.discount)), 2) AS revenue FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id JOIN customers c ON c.customer_id = o.customer_id WHERE o.status = 'completed' AND o.order_date BETWEEN '2024-04-01' AND '2024-06-30' GROUP BY c.customer_id, c.customer_name ORDER BY revenue DESC LIMIT 10",
+      "review_reasons": []
+    },
+    {
+      "id": "dev-top_customers_quarter-p1-3",
+      "question": "Top 5 customers by revenue in Q2 2024",
+      "status": "answered",
+      "correct": true,
+      "sql": "SELECT c.customer_name, ROUND(SUM(ol.quantity * ol.unit_price * (1 - ol.discount)), 2) AS revenue FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id JOIN customers c ON c.customer_id = o.customer_id WHERE o.status = 'completed' AND o.order_date BETWEEN '2024-04-01' AND '2024-06-30' GROUP BY c.customer_id, c.customer_name ORDER BY revenue DESC LIMIT 5",
+      "review_reasons": []
+    },
+    {
+      "id": "dev-top_customers_quarter-p2-1",
+      "question": "Who were our 5 biggest customers by revenue in Q3 2024?",
+      "status": "answered",
+      "correct": true,
+      "sql": "SELECT c.customer_name, ROUND(SUM(ol.quantity * ol.unit_price * (1 - ol.discount)), 2) AS revenue FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id JOIN customers c ON c.customer_id = o.customer_id WHERE o.status = 'completed' AND o.order_date BETWEEN '2024-07-01' AND '2024-09-30' GROUP BY c.customer_id, c.customer_name ORDER BY revenue DESC LIMIT 5",
+      "review_reasons": []
+    },
+    {
+      "id": "dev-top_customers_quarter-p2-2",
+      "question": "Who were our 3 biggest customers by revenue in Q1 2024?",
+      "status": "answered",
+      "correct": true,
+      "sql": "SELECT c.customer_name, ROUND(SUM(ol.quantity * ol.unit_price * (1 - ol.discount)), 2) AS revenue FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id JOIN customers c ON c.customer_id = o.customer_id WHERE o.status = 'completed' AND o.order_date BETWEEN '2024-01-01' AND '2024-03-31' GROUP BY c.customer_id, c.customer_name ORDER BY revenue DESC LIMIT 3",
+      "review_reasons": []
+    },
+    {
+      "id": "dev-top_customers_quarter-p2-3",
+      "question": "Who were our 10 biggest customers by revenue in Q3 2025?",
+      "status": "answered",
+      "correct": true,
+      "sql": "SELECT c.customer_name, ROUND(SUM(ol.quantity * ol.unit_price * (1 - ol.discount)), 2) AS revenue FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id JOIN customers c ON c.customer_id = o.customer_id WHERE o.status = 'completed' AND o.order_date BETWEEN '2025-07-01' AND '2025-09-30' GROUP BY c.customer_id, c.customer_name ORDER BY revenue DESC LIMIT 10",
+      "review_reasons": []
+    },
+    {
+      "id": "dev-category_revenue_in_region-p1-1",
+      "question": "Revenue by product category in the North region for 2025",
+      "status": "answered",
+      "correct": true,
+      "sql": "SELECT p.category, ROUND(SUM(ol.quantity * ol.unit_price * (1 - ol.discount)), 2) AS revenue FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id JOIN products p ON p.product_id = ol.product_id JOIN customers c ON c.customer_id = o.customer_id JOIN regions r ON r.region_id = c.region_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2025' AND r.region_name = 'North' GROUP BY p.category",
+      "review_reasons": []
+    },
+    {
+      "id": "dev-category_revenue_in_region-p1-2",
+      "question": "Revenue by product category in the South region for 2025",
+      "status": "answered",
+      "correct": true,
+      "sql": "SELECT p.category, ROUND(SUM(ol.quantity * ol.unit_price * (1 - ol.discount)), 2) AS revenue FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id JOIN products p ON p.product_id = ol.product_id JOIN customers c ON c.customer_id = o.customer_id JOIN regions r ON r.region_id = c.region_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2025' AND r.region_name = 'South' GROUP BY p.category",
+      "review_reasons": []
+    },
+    {
+      "id": "dev-category_revenue_in_region-p1-3",
+      "question": "Revenue by product category in the South region for 2024",
+      "status": "answered",
+      "correct": true,
+      "sql": "SELECT p.category, ROUND(SUM(ol.quantity * ol.unit_price * (1 - ol.discount)), 2) AS revenue FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id JOIN products p ON p.product_id = ol.product_id JOIN customers c ON c.customer_id = o.customer_id JOIN regions r ON r.region_id = c.region_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2024' AND r.region_name = 'South' GROUP BY p.category",
+      "review_reasons": []
+    },
+    {
+      "id": "dev-category_revenue_in_region-p2-1",
+      "question": "Break down East revenue by category in 2025.",
+      "status": "answered",
+      "correct": true,
+      "sql": "SELECT p.category, ROUND(SUM(ol.quantity * ol.unit_price * (1 - ol.discount)), 2) AS revenue FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id JOIN products p ON p.product_id = ol.product_id JOIN customers c ON c.customer_id = o.customer_id JOIN regions r ON r.region_id = c.region_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2025' AND r.region_name = 'East' GROUP BY p.category",
+      "review_reasons": []
+    },
+    {
+      "id": "dev-category_revenue_in_region-p2-2",
+      "question": "Break down North revenue by category in 2025.",
+      "status": "answered",
+      "correct": true,
+      "sql": "SELECT p.category, ROUND(SUM(ol.quantity * ol.unit_price * (1 - ol.discount)), 2) AS revenue FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id JOIN products p ON p.product_id = ol.product_id JOIN customers c ON c.customer_id = o.customer_id JOIN regions r ON r.region_id = c.region_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2025' AND r.region_name = 'North' GROUP BY p.category",
+      "review_reasons": []
+    },
+    {
+      "id": "dev-category_revenue_in_region-p2-3",
+      "question": "Break down East revenue by category in 2024.",
+      "status": "answered",
+      "correct": true,
+      "sql": "SELECT p.category, ROUND(SUM(ol.quantity * ol.unit_price * (1 - ol.discount)), 2) AS revenue FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id JOIN products p ON p.product_id = ol.product_id JOIN customers c ON c.customer_id = o.customer_id JOIN regions r ON r.region_id = c.region_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2024' AND r.region_name = 'East' GROUP BY p.category",
+      "review_reasons": []
+    },
+    {
+      "id": "dev-margin_pct_by_category-p1-1",
+      "question": "Gross margin % by category in 2024",
+      "status": "answered",
+      "correct": true,
+      "sql": "SELECT p.category, ROUND(100.0 * SUM(ol.quantity * (ol.unit_price * (1 - ol.discount) - p.unit_cost)) / SUM(ol.quantity * ol.unit_price * (1 - ol.discount)), 1) AS gross_margin_pct FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id JOIN products p ON p.product_id = ol.product_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2024' GROUP BY p.category",
+      "review_reasons": []
+    },
+    {
+      "id": "dev-margin_pct_by_category-p1-2",
+      "question": "Gross margin % by category in 2025",
+      "status": "answered",
+      "correct": true,
+      "sql": "SELECT p.category, ROUND(100.0 * SUM(ol.quantity * (ol.unit_price * (1 - ol.discount) - p.unit_cost)) / SUM(ol.quantity * ol.unit_price * (1 - ol.discount)), 1) AS gross_margin_pct FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id JOIN products p ON p.product_id = ol.product_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2025' GROUP BY p.category",
+      "review_reasons": []
+    },
+    {
+      "id": "dev-margin_pct_by_category-p2-1",
+      "question": "What was the gross margin percentage for each product category in 2024?",
+      "status": "answered",
+      "correct": true,
+      "sql": "SELECT p.category, ROUND(100.0 * SUM(ol.quantity * (ol.unit_price * (1 - ol.discount) - p.unit_cost)) / SUM(ol.quantity * ol.unit_price * (1 - ol.discount)), 1) AS gross_margin_pct FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id JOIN products p ON p.product_id = ol.product_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2024' GROUP BY p.category",
+      "review_reasons": []
+    },
+    {
+      "id": "dev-margin_pct_by_category-p2-2",
+      "question": "What was the gross margin percentage for each product category in 2025?",
+      "status": "answered",
+      "correct": true,
+      "sql": "SELECT p.category, ROUND(100.0 * SUM(ol.quantity * (ol.unit_price * (1 - ol.discount) - p.unit_cost)) / SUM(ol.quantity * ol.unit_price * (1 - ol.discount)), 1) AS gross_margin_pct FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id JOIN products p ON p.product_id = ol.product_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2025' GROUP BY p.category",
+      "review_reasons": []
+    },
+    {
+      "id": "dev-order_count_segment-p1-1",
+      "question": "How many orders did Mid-Market customers place in 2025?",
+      "status": "answered",
+      "correct": true,
+      "sql": "SELECT COUNT(DISTINCT o.order_id) AS orders FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id JOIN customers c ON c.customer_id = o.customer_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2025' AND c.segment = 'Mid-Market'",
+      "review_reasons": []
+    },
+    {
+      "id": "dev-order_count_segment-p1-2",
+      "question": "How many orders did SMB customers place in 2025?",
+      "status": "answered",
+      "correct": true,
+      "sql": "SELECT COUNT(DISTINCT o.order_id) AS orders FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id JOIN customers c ON c.customer_id = o.customer_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2025' AND c.segment = 'SMB'",
+      "review_reasons": []
+    },
+    {
+      "id": "dev-order_count_segment-p1-3",
+      "question": "How many orders did Enterprise customers place in 2024?",
+      "status": "answered",
+      "correct": true,
+      "sql": "SELECT COUNT(DISTINCT o.order_id) AS orders FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id JOIN customers c ON c.customer_id = o.customer_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2024' AND c.segment = 'Enterprise'",
+      "review_reasons": []
+    },
+    {
+      "id": "dev-order_count_segment-p2-1",
+      "question": "Number of Enterprise orders in 2025",
+      "status": "answered",
+      "correct": true,
+      "sql": "SELECT COUNT(DISTINCT o.order_id) AS orders FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id JOIN customers c ON c.customer_id = o.customer_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2025' AND c.segment = 'Enterprise'",
+      "review_reasons": []
+    },
+    {
+      "id": "dev-order_count_segment-p2-2",
+      "question": "Number of SMB orders in 2025",
+      "status": "answered",
+      "correct": true,
+      "sql": "SELECT COUNT(DISTINCT o.order_id) AS orders FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id JOIN customers c ON c.customer_id = o.customer_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2025' AND c.segment = 'SMB'",
+      "review_reasons": []
+    },
+    {
+      "id": "dev-order_count_segment-p2-3",
+      "question": "Number of Enterprise orders in 2024",
+      "status": "answered",
+      "correct": true,
+      "sql": "SELECT COUNT(DISTINCT o.order_id) AS orders FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id JOIN customers c ON c.customer_id = o.customer_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2024' AND c.segment = 'Enterprise'",
+      "review_reasons": []
+    },
+    {
+      "id": "dev-monthly_revenue-p1-1",
+      "question": "Monthly revenue for 2024",
+      "status": "answered",
+      "correct": true,
+      "sql": "SELECT substr(o.order_date, 1, 7) AS month, ROUND(SUM(ol.quantity * ol.unit_price * (1 - ol.discount)), 2) AS revenue FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2024' GROUP BY month ORDER BY month",
+      "review_reasons": []
+    },
+    {
+      "id": "dev-monthly_revenue-p1-2",
+      "question": "Monthly revenue for 2025",
+      "status": "answered",
+      "correct": true,
+      "sql": "SELECT substr(o.order_date, 1, 7) AS month, ROUND(SUM(ol.quantity * ol.unit_price * (1 - ol.discount)), 2) AS revenue FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2025' GROUP BY month ORDER BY month",
+      "review_reasons": []
+    },
+    {
+      "id": "dev-monthly_revenue-p2-1",
+      "question": "Show revenue by month in 2025.",
+      "status": "answered",
+      "correct": true,
+      "sql": "SELECT substr(o.order_date, 1, 7) AS month, ROUND(SUM(ol.quantity * ol.unit_price * (1 - ol.discount)), 2) AS revenue FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2025' GROUP BY month ORDER BY month",
+      "review_reasons": []
+    },
+    {
+      "id": "dev-monthly_revenue-p2-2",
+      "question": "Show revenue by month in 2024.",
+      "status": "answered",
+      "correct": true,
+      "sql": "SELECT substr(o.order_date, 1, 7) AS month, ROUND(SUM(ol.quantity * ol.unit_price * (1 - ol.discount)), 2) AS revenue FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2024' GROUP BY month ORDER BY month",
+      "review_reasons": []
+    },
+    {
+      "id": "dev-overdue_total-p1-1",
+      "question": "What is the total overdue amount?",
+      "status": "answered",
+      "correct": true,
+      "sql": "SELECT ROUND(SUM(i.amount - i.amount_paid), 2) AS overdue_amount FROM invoices i WHERE i.status = 'overdue'",
+      "review_reasons": []
+    },
+    {
+      "id": "dev-overdue_total-p2-1",
+      "question": "How much money is overdue?",
+      "status": "answered",
+      "correct": true,
+      "sql": "SELECT ROUND(SUM(i.amount - i.amount_paid), 2) AS overdue_amount FROM invoices i WHERE i.status = 'overdue'",
+      "review_reasons": []
+    },
+    {
+      "id": "dev-top_overdue_customers-p1-1",
+      "question": "Top 3 customers by overdue balance",
+      "status": "answered",
+      "correct": true,
+      "sql": "SELECT c.customer_name, ROUND(SUM(i.amount - i.amount_paid), 2) AS overdue_amount FROM invoices i JOIN customers c ON c.customer_id = i.customer_id WHERE i.status = 'overdue' GROUP BY c.customer_id, c.customer_name ORDER BY overdue_amount DESC LIMIT 3",
+      "review_reasons": []
+    },
+    {
+      "id": "dev-top_overdue_customers-p1-2",
+      "question": "Top 5 customers by overdue balance",
+      "status": "answered",
+      "correct": true,
+      "sql": "SELECT c.customer_name, ROUND(SUM(i.amount - i.amount_paid), 2) AS overdue_amount FROM invoices i JOIN customers c ON c.customer_id = i.customer_id WHERE i.status = 'overdue' GROUP BY c.customer_id, c.customer_name ORDER BY overdue_amount DESC LIMIT 5",
+      "review_reasons": []
+    },
+    {
+      "id": "dev-top_overdue_customers-p1-3",
+      "question": "Top 10 customers by overdue balance",
+      "status": "answered",
+      "correct": true,
+      "sql": "SELECT c.customer_name, ROUND(SUM(i.amount - i.amount_paid), 2) AS overdue_amount FROM invoices i JOIN customers c ON c.customer_id = i.customer_id WHERE i.status = 'overdue' GROUP BY c.customer_id, c.customer_name ORDER BY overdue_amount DESC LIMIT 10",
+      "review_reasons": []
+    },
+    {
+      "id": "dev-top_overdue_customers-p2-1",
+      "question": "Which 3 customers have the most overdue invoices by amount?",
+      "status": "answered",
+      "correct": true,
+      "sql": "SELECT c.customer_name, ROUND(SUM(i.amount - i.amount_paid), 2) AS overdue_amount FROM invoices i JOIN customers c ON c.customer_id = i.customer_id WHERE i.status = 'overdue' GROUP BY c.customer_id, c.customer_name ORDER BY overdue_amount DESC LIMIT 3",
+      "review_reasons": []
+    },
+    {
+      "id": "dev-top_overdue_customers-p2-2",
+      "question": "Which 5 customers have the most overdue invoices by amount?",
+      "status": "answered",
+      "correct": true,
+      "sql": "SELECT c.customer_name, ROUND(SUM(i.amount - i.amount_paid), 2) AS overdue_amount FROM invoices i JOIN customers c ON c.customer_id = i.customer_id WHERE i.status = 'overdue' GROUP BY c.customer_id, c.customer_name ORDER BY overdue_amount DESC LIMIT 5",
+      "review_reasons": []
+    },
+    {
+      "id": "dev-top_overdue_customers-p2-3",
+      "question": "Which 10 customers have the most overdue invoices by amount?",
+      "status": "answered",
+      "correct": true,
+      "sql": "SELECT c.customer_name, ROUND(SUM(i.amount - i.amount_paid), 2) AS overdue_amount FROM invoices i JOIN customers c ON c.customer_id = i.customer_id WHERE i.status = 'overdue' GROUP BY c.customer_id, c.customer_name ORDER BY overdue_amount DESC LIMIT 10",
+      "review_reasons": []
+    },
+    {
+      "id": "dev-expenses_by_department-p1-1",
+      "question": "Total expenses by department in 2024",
+      "status": "answered",
+      "correct": true,
+      "sql": "SELECT e.department, ROUND(SUM(e.amount), 2) AS expenses FROM expenses e WHERE substr(e.expense_date, 1, 4) = '2024' GROUP BY e.department",
+      "review_reasons": []
+    },
+    {
+      "id": "dev-expenses_by_department-p1-2",
+      "question": "Total expenses by department in 2025",
+      "status": "answered",
+      "correct": true,
+      "sql": "SELECT e.department, ROUND(SUM(e.amount), 2) AS expenses FROM expenses e WHERE substr(e.expense_date, 1, 4) = '2025' GROUP BY e.department",
+      "review_reasons": []
+    },
+    {
+      "id": "dev-expenses_by_department-p2-1",
+      "question": "Break down 2024 expenses per department.",
+      "status": "answered",
+      "correct": true,
+      "sql": "SELECT e.department, ROUND(SUM(e.amount), 2) AS expenses FROM expenses e WHERE substr(e.expense_date, 1, 4) = '2024' GROUP BY e.department",
+      "review_reasons": []
+    },
+    {
+      "id": "dev-expenses_by_department-p2-2",
+      "question": "Break down 2025 expenses per department.",
+      "status": "answered",
+      "correct": true,
+      "sql": "SELECT e.department, ROUND(SUM(e.amount), 2) AS expenses FROM expenses e WHERE substr(e.expense_date, 1, 4) = '2025' GROUP BY e.department",
+      "review_reasons": []
+    },
+    {
+      "id": "dev-budget_vs_actual_region-p1-1",
+      "question": "Revenue vs budget by region for 2024",
+      "status": "answered",
+      "correct": true,
+      "sql": "WITH a AS (SELECT c.region_id, SUM(ol.quantity * ol.unit_price * (1 - ol.discount)) AS rev FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id JOIN customers c ON c.customer_id = o.customer_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2024' GROUP BY c.region_id), b AS (SELECT region_id, SUM(revenue_budget) AS bud FROM budgets WHERE substr(month, 1, 4) = '2024' GROUP BY region_id) SELECT r.region_name, ROUND(a.rev, 2) AS revenue, ROUND(b.bud, 2) AS budget, ROUND(a.rev - b.bud, 2) AS variance FROM regions r JOIN a ON a.region_id = r.region_id JOIN b ON b.region_id = r.region_id ORDER BY variance",
+      "review_reasons": []
+    },
+    {
+      "id": "dev-budget_vs_actual_region-p1-2",
+      "question": "Revenue vs budget by region for 2025",
+      "status": "answered",
+      "correct": true,
+      "sql": "WITH a AS (SELECT c.region_id, SUM(ol.quantity * ol.unit_price * (1 - ol.discount)) AS rev FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id JOIN customers c ON c.customer_id = o.customer_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2025' GROUP BY c.region_id), b AS (SELECT region_id, SUM(revenue_budget) AS bud FROM budgets WHERE substr(month, 1, 4) = '2025' GROUP BY region_id) SELECT r.region_name, ROUND(a.rev, 2) AS revenue, ROUND(b.bud, 2) AS budget, ROUND(a.rev - b.bud, 2) AS variance FROM regions r JOIN a ON a.region_id = r.region_id JOIN b ON b.region_id = r.region_id ORDER BY variance",
+      "review_reasons": []
+    },
+    {
+      "id": "dev-budget_vs_actual_region-p2-1",
+      "question": "Compare actual revenue to budget for each region in 2024.",
+      "status": "answered",
+      "correct": true,
+      "sql": "WITH a AS (SELECT c.region_id, SUM(ol.quantity * ol.unit_price * (1 - ol.discount)) AS rev FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id JOIN customers c ON c.customer_id = o.customer_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2024' GROUP BY c.region_id), b AS (SELECT region_id, SUM(revenue_budget) AS bud FROM budgets WHERE substr(month, 1, 4) = '2024' GROUP BY region_id) SELECT r.region_name, ROUND(a.rev, 2) AS revenue, ROUND(b.bud, 2) AS budget, ROUND(a.rev - b.bud, 2) AS variance FROM regions r JOIN a ON a.region_id = r.region_id JOIN b ON b.region_id = r.region_id ORDER BY variance",
+      "review_reasons": []
+    },
+    {
+      "id": "dev-budget_vs_actual_region-p2-2",
+      "question": "Compare actual revenue to budget for each region in 2025.",
+      "status": "answered",
+      "correct": true,
+      "sql": "WITH a AS (SELECT c.region_id, SUM(ol.quantity * ol.unit_price * (1 - ol.discount)) AS rev FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id JOIN customers c ON c.customer_id = o.customer_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2025' GROUP BY c.region_id), b AS (SELECT region_id, SUM(revenue_budget) AS bud FROM budgets WHERE substr(month, 1, 4) = '2025' GROUP BY region_id) SELECT r.region_name, ROUND(a.rev, 2) AS revenue, ROUND(b.bud, 2) AS budget, ROUND(a.rev - b.bud, 2) AS variance FROM regions r JOIN a ON a.region_id = r.region_id JOIN b ON b.region_id = r.region_id ORDER BY variance",
+      "review_reasons": []
+    },
+    {
+      "id": "dev-aov_segment-p1-1",
+      "question": "Average order value for SMB customers in 2024",
+      "status": "answered",
+      "correct": true,
+      "sql": "SELECT ROUND(SUM(ol.quantity * ol.unit_price * (1 - ol.discount)) / COUNT(DISTINCT o.order_id), 2) AS avg_order_value FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id JOIN customers c ON c.customer_id = o.customer_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2024' AND c.segment = 'SMB'",
+      "review_reasons": []
+    },
+    {
+      "id": "dev-aov_segment-p1-2",
+      "question": "Average order value for Mid-Market customers in 2024",
+      "status": "answered",
+      "correct": true,
+      "sql": "SELECT ROUND(SUM(ol.quantity * ol.unit_price * (1 - ol.discount)) / COUNT(DISTINCT o.order_id), 2) AS avg_order_value FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id JOIN customers c ON c.customer_id = o.customer_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2024' AND c.segment = 'Mid-Market'",
+      "review_reasons": []
+    },
+    {
+      "id": "dev-aov_segment-p1-3",
+      "question": "Average order value for SMB customers in 2025",
+      "status": "answered",
+      "correct": true,
+      "sql": "SELECT ROUND(SUM(ol.quantity * ol.unit_price * (1 - ol.discount)) / COUNT(DISTINCT o.order_id), 2) AS avg_order_value FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id JOIN customers c ON c.customer_id = o.customer_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2025' AND c.segment = 'SMB'",
+      "review_reasons": []
+    },
+    {
+      "id": "dev-aov_segment-p2-1",
+      "question": "What was the AOV of Mid-Market accounts in 2024?",
+      "status": "answered",
+      "correct": true,
+      "sql": "SELECT ROUND(SUM(ol.quantity * ol.unit_price * (1 - ol.discount)) / COUNT(DISTINCT o.order_id), 2) AS avg_order_value FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id JOIN customers c ON c.customer_id = o.customer_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2024' AND c.segment = 'Mid-Market'",
+      "review_reasons": []
+    },
+    {
+      "id": "dev-aov_segment-p2-2",
+      "question": "What was the AOV of Mid-Market accounts in 2025?",
+      "status": "answered",
+      "correct": true,
+      "sql": "SELECT ROUND(SUM(ol.quantity * ol.unit_price * (1 - ol.discount)) / COUNT(DISTINCT o.order_id), 2) AS avg_order_value FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id JOIN customers c ON c.customer_id = o.customer_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2025' AND c.segment = 'Mid-Market'",
+      "review_reasons": []
+    },
+    {
+      "id": "dev-aov_segment-p2-3",
+      "question": "What was the AOV of SMB accounts in 2024?",
+      "status": "answered",
+      "correct": true,
+      "sql": "SELECT ROUND(SUM(ol.quantity * ol.unit_price * (1 - ol.discount)) / COUNT(DISTINCT o.order_id), 2) AS avg_order_value FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id JOIN customers c ON c.customer_id = o.customer_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2024' AND c.segment = 'SMB'",
+      "review_reasons": []
+    },
+    {
+      "id": "dev-bottom_products_units-p1-1",
+      "question": "Bottom 5 products by units sold in 2025",
+      "status": "answered",
+      "correct": true,
+      "sql": "SELECT p.product_name, SUM(ol.quantity) AS units FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id JOIN products p ON p.product_id = ol.product_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2025' GROUP BY p.product_id, p.product_name ORDER BY units ASC LIMIT 5",
+      "review_reasons": []
+    },
+    {
+      "id": "dev-bottom_products_units-p1-2",
+      "question": "Bottom 10 products by units sold in 2024",
+      "status": "answered",
+      "correct": true,
+      "sql": "SELECT p.product_name, SUM(ol.quantity) AS units FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id JOIN products p ON p.product_id = ol.product_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2024' GROUP BY p.product_id, p.product_name ORDER BY units ASC LIMIT 10",
+      "review_reasons": []
+    },
+    {
+      "id": "dev-bottom_products_units-p1-3",
+      "question": "Bottom 3 products by units sold in 2025",
+      "status": "answered",
+      "correct": true,
+      "sql": "SELECT p.product_name, SUM(ol.quantity) AS units FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id JOIN products p ON p.product_id = ol.product_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2025' GROUP BY p.product_id, p.product_name ORDER BY units ASC LIMIT 3",
+      "review_reasons": []
+    },
+    {
+      "id": "dev-bottom_products_units-p2-1",
+      "question": "Which 5 products sold the fewest units in 2024?",
+      "status": "answered",
+      "correct": true,
+      "sql": "SELECT p.product_name, SUM(ol.quantity) AS units FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id JOIN products p ON p.product_id = ol.product_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2024' GROUP BY p.product_id, p.product_name ORDER BY units ASC LIMIT 5",
+      "review_reasons": []
+    },
+    {
+      "id": "dev-bottom_products_units-p2-2",
+      "question": "Which 10 products sold the fewest units in 2024?",
+      "status": "answered",
+      "correct": true,
+      "sql": "SELECT p.product_name, SUM(ol.quantity) AS units FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id JOIN products p ON p.product_id = ol.product_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2024' GROUP BY p.product_id, p.product_name ORDER BY units ASC LIMIT 10",
+      "review_reasons": []
+    },
+    {
+      "id": "dev-bottom_products_units-p2-3",
+      "question": "Which 5 products sold the fewest units in 2025?",
+      "status": "answered",
+      "correct": true,
+      "sql": "SELECT p.product_name, SUM(ol.quantity) AS units FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id JOIN products p ON p.product_id = ol.product_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2025' GROUP BY p.product_id, p.product_name ORDER BY units ASC LIMIT 5",
+      "review_reasons": []
+    },
+    {
+      "id": "dev-revenue_growth-p1-1",
+      "question": "What was revenue growth from 2024 to 2025?",
+      "status": "answered",
+      "correct": true,
+      "sql": "SELECT ROUND(100.0 * (SUM(CASE WHEN substr(o.order_date, 1, 4) = '2025' THEN ol.quantity * ol.unit_price * (1 - ol.discount) END) - SUM(CASE WHEN substr(o.order_date, 1, 4) = '2024' THEN ol.quantity * ol.unit_price * (1 - ol.discount) END)) / SUM(CASE WHEN substr(o.order_date, 1, 4) = '2024' THEN ol.quantity * ol.unit_price * (1 - ol.discount) END), 1) AS revenue_growth_pct FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id WHERE o.status = 'completed'",
+      "review_reasons": []
+    },
+    {
+      "id": "dev-revenue_growth-p2-1",
+      "question": "By what percentage did revenue grow in 2025 vs 2024?",
+      "status": "answered",
+      "correct": true,
+      "sql": "SELECT ROUND(100.0 * (SUM(CASE WHEN substr(o.order_date, 1, 4) = '2025' THEN ol.quantity * ol.unit_price * (1 - ol.discount) END) - SUM(CASE WHEN substr(o.order_date, 1, 4) = '2024' THEN ol.quantity * ol.unit_price * (1 - ol.discount) END)) / SUM(CASE WHEN substr(o.order_date, 1, 4) = '2024' THEN ol.quantity * ol.unit_price * (1 - ol.discount) END), 1) AS revenue_growth_pct FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id WHERE o.status = 'completed'",
+      "review_reasons": []
+    }
+  ]
+}

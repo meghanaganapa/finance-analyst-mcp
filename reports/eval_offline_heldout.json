@@ -1,0 +1,617 @@
+{
+  "backend": "offline",
+  "split": "heldout",
+  "n": 64,
+  "execution_accuracy": {
+    "value": 0.359,
+    "ci95": [
+      0.25,
+      0.484
+    ],
+    "n": 64
+  },
+  "answered_rate": 0.594,
+  "auto_answer_rate": 0.172,
+  "auto_answer_accuracy": {
+    "value": 1.0,
+    "ci95": [
+      1.0,
+      1.0
+    ],
+    "n": 11
+  },
+  "flagged_for_review_rate": 0.422,
+  "abstain_rate": 0.406,
+  "silent_error_rate": 0.0,
+  "misses_caught_by_review": 1.0,
+  "accuracy_by_family": {
+    "aov_segment": 0.0,
+    "bottom_products_units": 0.0,
+    "budget_vs_actual_region": 1.0,
+    "category_revenue_in_region": 1.0,
+    "expenses_by_department": 0.0,
+    "margin_pct_by_category": 1.0,
+    "monthly_revenue": 0.5,
+    "order_count_segment": 0.5,
+    "overdue_total": 0.0,
+    "revenue_by_region": 0.5,
+    "revenue_growth": 0.0,
+    "top_customers_quarter": 0.0,
+    "top_overdue_customers": 0.0,
+    "total_revenue": 0.5
+  },
+  "llm_tokens": {
+    "input": 0,
+    "output": 0
+  },
+  "llm_cost_usd_total": 0.0,
+  "llm_cost_usd_per_question": 0.0,
+  "details": [
+    {
+      "id": "heldout-total_revenue-p3-1",
+      "question": "How much did we sell in 2024 in total?",
+      "status": "abstained",
+      "correct": false,
+      "sql": null,
+      "review_reasons": []
+    },
+    {
+      "id": "heldout-total_revenue-p3-2",
+      "question": "How much did we sell in 2025 in total?",
+      "status": "abstained",
+      "correct": false,
+      "sql": null,
+      "review_reasons": []
+    },
+    {
+      "id": "heldout-total_revenue-p4-1",
+      "question": "Total sales for calendar year 2025, please.",
+      "status": "needs_review",
+      "correct": true,
+      "sql": "SELECT ROUND(SUM(ol.quantity * ol.unit_price * (1 - ol.discount)), 2) AS revenue FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2025'",
+      "review_reasons": [
+        "Parts of the question were not understood: calendar"
+      ]
+    },
+    {
+      "id": "heldout-total_revenue-p4-2",
+      "question": "Total sales for calendar year 2024, please.",
+      "status": "needs_review",
+      "correct": true,
+      "sql": "SELECT ROUND(SUM(ol.quantity * ol.unit_price * (1 - ol.discount)), 2) AS revenue FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2024'",
+      "review_reasons": [
+        "Parts of the question were not understood: calendar"
+      ]
+    },
+    {
+      "id": "heldout-revenue_by_region-p3-1",
+      "question": "How did each region do on sales in 2024?",
+      "status": "answered",
+      "correct": true,
+      "sql": "SELECT r.region_name, ROUND(SUM(ol.quantity * ol.unit_price * (1 - ol.discount)), 2) AS revenue FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id JOIN customers c ON c.customer_id = o.customer_id JOIN regions r ON r.region_id = c.region_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2024' GROUP BY r.region_name",
+      "review_reasons": []
+    },
+    {
+      "id": "heldout-revenue_by_region-p3-2",
+      "question": "How did each region do on sales in 2025?",
+      "status": "answered",
+      "correct": true,
+      "sql": "SELECT r.region_name, ROUND(SUM(ol.quantity * ol.unit_price * (1 - ol.discount)), 2) AS revenue FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id JOIN customers c ON c.customer_id = o.customer_id JOIN regions r ON r.region_id = c.region_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2025' GROUP BY r.region_name",
+      "review_reasons": []
+    },
+    {
+      "id": "heldout-revenue_by_region-p4-1",
+      "question": "Which region brought in the most revenue in 2025? Show every region.",
+      "status": "needs_review",
+      "correct": false,
+      "sql": "SELECT ROUND(SUM(ol.quantity * ol.unit_price * (1 - ol.discount)), 2) AS revenue FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2025'",
+      "review_reasons": [
+        "Parts of the question were not understood: brought, every"
+      ]
+    },
+    {
+      "id": "heldout-revenue_by_region-p4-2",
+      "question": "Which region brought in the most revenue in 2024? Show every region.",
+      "status": "needs_review",
+      "correct": false,
+      "sql": "SELECT ROUND(SUM(ol.quantity * ol.unit_price * (1 - ol.discount)), 2) AS revenue FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2024'",
+      "review_reasons": [
+        "Parts of the question were not understood: brought, every"
+      ]
+    },
+    {
+      "id": "heldout-top_customers_quarter-p3-1",
+      "question": "List the 3 highest-spending clients during Q1 2024.",
+      "status": "abstained",
+      "correct": false,
+      "sql": null,
+      "review_reasons": []
+    },
+    {
+      "id": "heldout-top_customers_quarter-p3-2",
+      "question": "List the 10 highest-spending clients during Q4 2025.",
+      "status": "abstained",
+      "correct": false,
+      "sql": null,
+      "review_reasons": []
+    },
+    {
+      "id": "heldout-top_customers_quarter-p3-3",
+      "question": "List the 10 highest-spending clients during Q2 2025.",
+      "status": "abstained",
+      "correct": false,
+      "sql": null,
+      "review_reasons": []
+    },
+    {
+      "id": "heldout-top_customers_quarter-p4-1",
+      "question": "Which 3 accounts generated the most sales in Q4 2024?",
+      "status": "needs_review",
+      "correct": false,
+      "sql": "SELECT ROUND(SUM(ol.quantity * ol.unit_price * (1 - ol.discount)), 2) AS revenue FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id WHERE o.status = 'completed' AND o.order_date BETWEEN '2024-10-01' AND '2024-12-31'",
+      "review_reasons": [
+        "Parts of the question were not understood: generated"
+      ]
+    },
+    {
+      "id": "heldout-top_customers_quarter-p4-2",
+      "question": "Which 3 accounts generated the most sales in Q3 2025?",
+      "status": "needs_review",
+      "correct": false,
+      "sql": "SELECT ROUND(SUM(ol.quantity * ol.unit_price * (1 - ol.discount)), 2) AS revenue FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id WHERE o.status = 'completed' AND o.order_date BETWEEN '2025-07-01' AND '2025-09-30'",
+      "review_reasons": [
+        "Parts of the question were not understood: generated"
+      ]
+    },
+    {
+      "id": "heldout-top_customers_quarter-p4-3",
+      "question": "Which 5 accounts generated the most sales in Q3 2024?",
+      "status": "needs_review",
+      "correct": false,
+      "sql": "SELECT ROUND(SUM(ol.quantity * ol.unit_price * (1 - ol.discount)), 2) AS revenue FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id WHERE o.status = 'completed' AND o.order_date BETWEEN '2024-07-01' AND '2024-09-30'",
+      "review_reasons": [
+        "Parts of the question were not understood: generated"
+      ]
+    },
+    {
+      "id": "heldout-category_revenue_in_region-p3-1",
+      "question": "How much revenue did the South region make from each product category in 2024?",
+      "status": "needs_review",
+      "correct": true,
+      "sql": "SELECT p.category, ROUND(SUM(ol.quantity * ol.unit_price * (1 - ol.discount)), 2) AS revenue FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id JOIN products p ON p.product_id = ol.product_id JOIN customers c ON c.customer_id = o.customer_id JOIN regions r ON r.region_id = c.region_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2024' AND r.region_name = 'South' GROUP BY p.category",
+      "review_reasons": [
+        "Parts of the question were not understood: make"
+      ]
+    },
+    {
+      "id": "heldout-category_revenue_in_region-p3-2",
+      "question": "How much revenue did the North region make from each product category in 2025?",
+      "status": "needs_review",
+      "correct": true,
+      "sql": "SELECT p.category, ROUND(SUM(ol.quantity * ol.unit_price * (1 - ol.discount)), 2) AS revenue FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id JOIN products p ON p.product_id = ol.product_id JOIN customers c ON c.customer_id = o.customer_id JOIN regions r ON r.region_id = c.region_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2025' AND r.region_name = 'North' GROUP BY p.category",
+      "review_reasons": [
+        "Parts of the question were not understood: make"
+      ]
+    },
+    {
+      "id": "heldout-category_revenue_in_region-p3-3",
+      "question": "How much revenue did the North region make from each product category in 2024?",
+      "status": "needs_review",
+      "correct": true,
+      "sql": "SELECT p.category, ROUND(SUM(ol.quantity * ol.unit_price * (1 - ol.discount)), 2) AS revenue FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id JOIN products p ON p.product_id = ol.product_id JOIN customers c ON c.customer_id = o.customer_id JOIN regions r ON r.region_id = c.region_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2024' AND r.region_name = 'North' GROUP BY p.category",
+      "review_reasons": [
+        "Parts of the question were not understood: make"
+      ]
+    },
+    {
+      "id": "heldout-category_revenue_in_region-p4-1",
+      "question": "Sales per category for West, 2024?",
+      "status": "answered",
+      "correct": true,
+      "sql": "SELECT p.category, ROUND(SUM(ol.quantity * ol.unit_price * (1 - ol.discount)), 2) AS revenue FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id JOIN products p ON p.product_id = ol.product_id JOIN customers c ON c.customer_id = o.customer_id JOIN regions r ON r.region_id = c.region_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2024' AND r.region_name = 'West' GROUP BY p.category",
+      "review_reasons": []
+    },
+    {
+      "id": "heldout-category_revenue_in_region-p4-2",
+      "question": "Sales per category for East, 2025?",
+      "status": "answered",
+      "correct": true,
+      "sql": "SELECT p.category, ROUND(SUM(ol.quantity * ol.unit_price * (1 - ol.discount)), 2) AS revenue FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id JOIN products p ON p.product_id = ol.product_id JOIN customers c ON c.customer_id = o.customer_id JOIN regions r ON r.region_id = c.region_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2025' AND r.region_name = 'East' GROUP BY p.category",
+      "review_reasons": []
+    },
+    {
+      "id": "heldout-category_revenue_in_region-p4-3",
+      "question": "Sales per category for South, 2024?",
+      "status": "answered",
+      "correct": true,
+      "sql": "SELECT p.category, ROUND(SUM(ol.quantity * ol.unit_price * (1 - ol.discount)), 2) AS revenue FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id JOIN products p ON p.product_id = ol.product_id JOIN customers c ON c.customer_id = o.customer_id JOIN regions r ON r.region_id = c.region_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2024' AND r.region_name = 'South' GROUP BY p.category",
+      "review_reasons": []
+    },
+    {
+      "id": "heldout-margin_pct_by_category-p3-1",
+      "question": "How profitable was each category in 2025, as a margin percentage?",
+      "status": "needs_review",
+      "correct": true,
+      "sql": "SELECT p.category, ROUND(100.0 * SUM(ol.quantity * (ol.unit_price * (1 - ol.discount) - p.unit_cost)) / SUM(ol.quantity * ol.unit_price * (1 - ol.discount)), 1) AS gross_margin_pct FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id JOIN products p ON p.product_id = ol.product_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2025' GROUP BY p.category",
+      "review_reasons": [
+        "Parts of the question were not understood: profitable, as"
+      ]
+    },
+    {
+      "id": "heldout-margin_pct_by_category-p3-2",
+      "question": "How profitable was each category in 2024, as a margin percentage?",
+      "status": "needs_review",
+      "correct": true,
+      "sql": "SELECT p.category, ROUND(100.0 * SUM(ol.quantity * (ol.unit_price * (1 - ol.discount) - p.unit_cost)) / SUM(ol.quantity * ol.unit_price * (1 - ol.discount)), 1) AS gross_margin_pct FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id JOIN products p ON p.product_id = ol.product_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2024' GROUP BY p.category",
+      "review_reasons": [
+        "Parts of the question were not understood: profitable, as"
+      ]
+    },
+    {
+      "id": "heldout-margin_pct_by_category-p4-1",
+      "question": "Category margin % for 2025?",
+      "status": "answered",
+      "correct": true,
+      "sql": "SELECT p.category, ROUND(100.0 * SUM(ol.quantity * (ol.unit_price * (1 - ol.discount) - p.unit_cost)) / SUM(ol.quantity * ol.unit_price * (1 - ol.discount)), 1) AS gross_margin_pct FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id JOIN products p ON p.product_id = ol.product_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2025' GROUP BY p.category",
+      "review_reasons": []
+    },
+    {
+      "id": "heldout-margin_pct_by_category-p4-2",
+      "question": "Category margin % for 2024?",
+      "status": "answered",
+      "correct": true,
+      "sql": "SELECT p.category, ROUND(100.0 * SUM(ol.quantity * (ol.unit_price * (1 - ol.discount) - p.unit_cost)) / SUM(ol.quantity * ol.unit_price * (1 - ol.discount)), 1) AS gross_margin_pct FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id JOIN products p ON p.product_id = ol.product_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2024' GROUP BY p.category",
+      "review_reasons": []
+    },
+    {
+      "id": "heldout-order_count_segment-p3-1",
+      "question": "Count of completed orders from the Mid-Market segment in 2025?",
+      "status": "needs_review",
+      "correct": true,
+      "sql": "SELECT COUNT(DISTINCT o.order_id) AS orders FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id JOIN customers c ON c.customer_id = o.customer_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2025' AND c.segment = 'Mid-Market'",
+      "review_reasons": [
+        "Parts of the question were not understood: completed"
+      ]
+    },
+    {
+      "id": "heldout-order_count_segment-p3-2",
+      "question": "Count of completed orders from the Mid-Market segment in 2024?",
+      "status": "needs_review",
+      "correct": true,
+      "sql": "SELECT COUNT(DISTINCT o.order_id) AS orders FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id JOIN customers c ON c.customer_id = o.customer_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2024' AND c.segment = 'Mid-Market'",
+      "review_reasons": [
+        "Parts of the question were not understood: completed"
+      ]
+    },
+    {
+      "id": "heldout-order_count_segment-p3-3",
+      "question": "Count of completed orders from the Enterprise segment in 2024?",
+      "status": "needs_review",
+      "correct": true,
+      "sql": "SELECT COUNT(DISTINCT o.order_id) AS orders FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id JOIN customers c ON c.customer_id = o.customer_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2024' AND c.segment = 'Enterprise'",
+      "review_reasons": [
+        "Parts of the question were not understood: completed"
+      ]
+    },
+    {
+      "id": "heldout-order_count_segment-p4-1",
+      "question": "In 2024, how many purchases came from Enterprise accounts?",
+      "status": "abstained",
+      "correct": false,
+      "sql": null,
+      "review_reasons": []
+    },
+    {
+      "id": "heldout-order_count_segment-p4-2",
+      "question": "In 2024, how many purchases came from SMB accounts?",
+      "status": "abstained",
+      "correct": false,
+      "sql": null,
+      "review_reasons": []
+    },
+    {
+      "id": "heldout-order_count_segment-p4-3",
+      "question": "In 2025, how many purchases came from SMB accounts?",
+      "status": "abstained",
+      "correct": false,
+      "sql": null,
+      "review_reasons": []
+    },
+    {
+      "id": "heldout-monthly_revenue-p3-1",
+      "question": "What's the month-by-month sales trend for 2024?",
+      "status": "needs_review",
+      "correct": false,
+      "sql": "SELECT ROUND(SUM(ol.quantity * ol.unit_price * (1 - ol.discount)), 2) AS revenue FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2024'",
+      "review_reasons": [
+        "Parts of the question were not understood: s, month-by-month, trend"
+      ]
+    },
+    {
+      "id": "heldout-monthly_revenue-p3-2",
+      "question": "What's the month-by-month sales trend for 2025?",
+      "status": "needs_review",
+      "correct": false,
+      "sql": "SELECT ROUND(SUM(ol.quantity * ol.unit_price * (1 - ol.discount)), 2) AS revenue FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2025'",
+      "review_reasons": [
+        "Parts of the question were not understood: s, month-by-month, trend"
+      ]
+    },
+    {
+      "id": "heldout-monthly_revenue-p4-1",
+      "question": "Give me 2025 sales for each month.",
+      "status": "answered",
+      "correct": true,
+      "sql": "SELECT substr(o.order_date, 1, 7) AS month, ROUND(SUM(ol.quantity * ol.unit_price * (1 - ol.discount)), 2) AS revenue FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2025' GROUP BY month ORDER BY month",
+      "review_reasons": []
+    },
+    {
+      "id": "heldout-monthly_revenue-p4-2",
+      "question": "Give me 2024 sales for each month.",
+      "status": "answered",
+      "correct": true,
+      "sql": "SELECT substr(o.order_date, 1, 7) AS month, ROUND(SUM(ol.quantity * ol.unit_price * (1 - ol.discount)), 2) AS revenue FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2024' GROUP BY month ORDER BY month",
+      "review_reasons": []
+    },
+    {
+      "id": "heldout-overdue_total-p3-1",
+      "question": "How much do customers owe us on invoices past their due date?",
+      "status": "abstained",
+      "correct": false,
+      "sql": null,
+      "review_reasons": []
+    },
+    {
+      "id": "heldout-overdue_total-p4-1",
+      "question": "Total past-due receivables right now?",
+      "status": "abstained",
+      "correct": false,
+      "sql": null,
+      "review_reasons": []
+    },
+    {
+      "id": "heldout-top_overdue_customers-p3-1",
+      "question": "Who are the 10 worst late payers, by amount past due?",
+      "status": "abstained",
+      "correct": false,
+      "sql": null,
+      "review_reasons": []
+    },
+    {
+      "id": "heldout-top_overdue_customers-p3-2",
+      "question": "Who are the 3 worst late payers, by amount past due?",
+      "status": "abstained",
+      "correct": false,
+      "sql": null,
+      "review_reasons": []
+    },
+    {
+      "id": "heldout-top_overdue_customers-p3-3",
+      "question": "Who are the 5 worst late payers, by amount past due?",
+      "status": "abstained",
+      "correct": false,
+      "sql": null,
+      "review_reasons": []
+    },
+    {
+      "id": "heldout-top_overdue_customers-p4-1",
+      "question": "List the 3 clients owing us the most on overdue invoices.",
+      "status": "needs_review",
+      "correct": false,
+      "sql": "SELECT ROUND(SUM(i.amount - i.amount_paid), 2) AS overdue_amount FROM invoices i WHERE i.status = 'overdue'",
+      "review_reasons": [
+        "Parts of the question were not understood: list, clients, owing, us"
+      ]
+    },
+    {
+      "id": "heldout-top_overdue_customers-p4-2",
+      "question": "List the 5 clients owing us the most on overdue invoices.",
+      "status": "needs_review",
+      "correct": false,
+      "sql": "SELECT ROUND(SUM(i.amount - i.amount_paid), 2) AS overdue_amount FROM invoices i WHERE i.status = 'overdue'",
+      "review_reasons": [
+        "Parts of the question were not understood: list, clients, owing, us"
+      ]
+    },
+    {
+      "id": "heldout-top_overdue_customers-p4-3",
+      "question": "List the 10 clients owing us the most on overdue invoices.",
+      "status": "needs_review",
+      "correct": false,
+      "sql": "SELECT ROUND(SUM(i.amount - i.amount_paid), 2) AS overdue_amount FROM invoices i WHERE i.status = 'overdue'",
+      "review_reasons": [
+        "Parts of the question were not understood: list, clients, owing, us"
+      ]
+    },
+    {
+      "id": "heldout-expenses_by_department-p3-1",
+      "question": "What did each department spend in 2025?",
+      "status": "abstained",
+      "correct": false,
+      "sql": null,
+      "review_reasons": []
+    },
+    {
+      "id": "heldout-expenses_by_department-p3-2",
+      "question": "What did each department spend in 2024?",
+      "status": "abstained",
+      "correct": false,
+      "sql": null,
+      "review_reasons": []
+    },
+    {
+      "id": "heldout-expenses_by_department-p4-1",
+      "question": "Departmental spend for 2024?",
+      "status": "abstained",
+      "correct": false,
+      "sql": null,
+      "review_reasons": []
+    },
+    {
+      "id": "heldout-expenses_by_department-p4-2",
+      "question": "Departmental spend for 2025?",
+      "status": "abstained",
+      "correct": false,
+      "sql": null,
+      "review_reasons": []
+    },
+    {
+      "id": "heldout-budget_vs_actual_region-p3-1",
+      "question": "How did each region perform against its 2024 revenue budget?",
+      "status": "needs_review",
+      "correct": true,
+      "sql": "WITH a AS (SELECT c.region_id, SUM(ol.quantity * ol.unit_price * (1 - ol.discount)) AS rev FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id JOIN customers c ON c.customer_id = o.customer_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2024' GROUP BY c.region_id), b AS (SELECT region_id, SUM(revenue_budget) AS bud FROM budgets WHERE substr(month, 1, 4) = '2024' GROUP BY region_id) SELECT r.region_name, ROUND(a.rev, 2) AS revenue, ROUND(b.bud, 2) AS budget, ROUND(a.rev - b.bud, 2) AS variance FROM regions r JOIN a ON a.region_id = r.region_id JOIN b ON b.region_id = r.region_id ORDER BY variance",
+      "review_reasons": [
+        "Parts of the question were not understood: perform, against, its"
+      ]
+    },
+    {
+      "id": "heldout-budget_vs_actual_region-p3-2",
+      "question": "How did each region perform against its 2025 revenue budget?",
+      "status": "needs_review",
+      "correct": true,
+      "sql": "WITH a AS (SELECT c.region_id, SUM(ol.quantity * ol.unit_price * (1 - ol.discount)) AS rev FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id JOIN customers c ON c.customer_id = o.customer_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2025' GROUP BY c.region_id), b AS (SELECT region_id, SUM(revenue_budget) AS bud FROM budgets WHERE substr(month, 1, 4) = '2025' GROUP BY region_id) SELECT r.region_name, ROUND(a.rev, 2) AS revenue, ROUND(b.bud, 2) AS budget, ROUND(a.rev - b.bud, 2) AS variance FROM regions r JOIN a ON a.region_id = r.region_id JOIN b ON b.region_id = r.region_id ORDER BY variance",
+      "review_reasons": [
+        "Parts of the question were not understood: perform, against, its"
+      ]
+    },
+    {
+      "id": "heldout-budget_vs_actual_region-p4-1",
+      "question": "Budget versus actual sales per region, 2024.",
+      "status": "answered",
+      "correct": true,
+      "sql": "WITH a AS (SELECT c.region_id, SUM(ol.quantity * ol.unit_price * (1 - ol.discount)) AS rev FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id JOIN customers c ON c.customer_id = o.customer_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2024' GROUP BY c.region_id), b AS (SELECT region_id, SUM(revenue_budget) AS bud FROM budgets WHERE substr(month, 1, 4) = '2024' GROUP BY region_id) SELECT r.region_name, ROUND(a.rev, 2) AS revenue, ROUND(b.bud, 2) AS budget, ROUND(a.rev - b.bud, 2) AS variance FROM regions r JOIN a ON a.region_id = r.region_id JOIN b ON b.region_id = r.region_id ORDER BY variance",
+      "review_reasons": []
+    },
+    {
+      "id": "heldout-budget_vs_actual_region-p4-2",
+      "question": "Budget versus actual sales per region, 2025.",
+      "status": "answered",
+      "correct": true,
+      "sql": "WITH a AS (SELECT c.region_id, SUM(ol.quantity * ol.unit_price * (1 - ol.discount)) AS rev FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id JOIN customers c ON c.customer_id = o.customer_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2025' GROUP BY c.region_id), b AS (SELECT region_id, SUM(revenue_budget) AS bud FROM budgets WHERE substr(month, 1, 4) = '2025' GROUP BY region_id) SELECT r.region_name, ROUND(a.rev, 2) AS revenue, ROUND(b.bud, 2) AS budget, ROUND(a.rev - b.bud, 2) AS variance FROM regions r JOIN a ON a.region_id = r.region_id JOIN b ON b.region_id = r.region_id ORDER BY variance",
+      "review_reasons": []
+    },
+    {
+      "id": "heldout-aov_segment-p3-1",
+      "question": "On average, how much was a Mid-Market order worth in 2024?",
+      "status": "abstained",
+      "correct": false,
+      "sql": null,
+      "review_reasons": []
+    },
+    {
+      "id": "heldout-aov_segment-p3-2",
+      "question": "On average, how much was a Mid-Market order worth in 2025?",
+      "status": "abstained",
+      "correct": false,
+      "sql": null,
+      "review_reasons": []
+    },
+    {
+      "id": "heldout-aov_segment-p3-3",
+      "question": "On average, how much was a SMB order worth in 2024?",
+      "status": "abstained",
+      "correct": false,
+      "sql": null,
+      "review_reasons": []
+    },
+    {
+      "id": "heldout-aov_segment-p4-1",
+      "question": "Mean order size in dollars for the Mid-Market segment, 2025?",
+      "status": "abstained",
+      "correct": false,
+      "sql": null,
+      "review_reasons": []
+    },
+    {
+      "id": "heldout-aov_segment-p4-2",
+      "question": "Mean order size in dollars for the SMB segment, 2024?",
+      "status": "abstained",
+      "correct": false,
+      "sql": null,
+      "review_reasons": []
+    },
+    {
+      "id": "heldout-aov_segment-p4-3",
+      "question": "Mean order size in dollars for the Enterprise segment, 2025?",
+      "status": "abstained",
+      "correct": false,
+      "sql": null,
+      "review_reasons": []
+    },
+    {
+      "id": "heldout-bottom_products_units-p3-1",
+      "question": "What were our 10 slowest-moving products in 2024 by quantity?",
+      "status": "abstained",
+      "correct": false,
+      "sql": null,
+      "review_reasons": []
+    },
+    {
+      "id": "heldout-bottom_products_units-p3-2",
+      "question": "What were our 3 slowest-moving products in 2025 by quantity?",
+      "status": "abstained",
+      "correct": false,
+      "sql": null,
+      "review_reasons": []
+    },
+    {
+      "id": "heldout-bottom_products_units-p3-3",
+      "question": "What were our 10 slowest-moving products in 2025 by quantity?",
+      "status": "abstained",
+      "correct": false,
+      "sql": null,
+      "review_reasons": []
+    },
+    {
+      "id": "heldout-bottom_products_units-p4-1",
+      "question": "Name the 3 least popular items by units in 2024.",
+      "status": "needs_review",
+      "correct": false,
+      "sql": "SELECT SUM(ol.quantity) AS units FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2024'",
+      "review_reasons": [
+        "Parts of the question were not understood: name, popular, items"
+      ]
+    },
+    {
+      "id": "heldout-bottom_products_units-p4-2",
+      "question": "Name the 5 least popular items by units in 2024.",
+      "status": "needs_review",
+      "correct": false,
+      "sql": "SELECT SUM(ol.quantity) AS units FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2024'",
+      "review_reasons": [
+        "Parts of the question were not understood: name, popular, items"
+      ]
+    },
+    {
+      "id": "heldout-bottom_products_units-p4-3",
+      "question": "Name the 3 least popular items by units in 2025.",
+      "status": "needs_review",
+      "correct": false,
+      "sql": "SELECT SUM(ol.quantity) AS units FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id WHERE o.status = 'completed' AND substr(o.order_date, 1, 4) = '2025'",
+      "review_reasons": [
+        "Parts of the question were not understood: name, popular, items"
+      ]
+    },
+    {
+      "id": "heldout-revenue_growth-p3-1",
+      "question": "How much did sales increase year over year from 2024 to 2025, in percent?",
+      "status": "needs_review",
+      "correct": false,
+      "sql": "SELECT ROUND(SUM(ol.quantity * ol.unit_price * (1 - ol.discount)), 2) AS revenue FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id WHERE o.status = 'completed'",
+      "review_reasons": [
+        "Parts of the question were not understood: increase, over"
+      ]
+    },
+    {
+      "id": "heldout-revenue_growth-p4-1",
+      "question": "Year-on-year revenue change 2025 versus 2024 (%)?",
+      "status": "needs_review",
+      "correct": false,
+      "sql": "SELECT ROUND(SUM(ol.quantity * ol.unit_price * (1 - ol.discount)), 2) AS revenue FROM orders o JOIN order_lines ol ON ol.order_id = o.order_id WHERE o.status = 'completed'",
+      "review_reasons": [
+        "Parts of the question were not understood: year-on-year, change"
+      ]
+    }
+  ]
+}
