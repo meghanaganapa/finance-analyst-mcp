@@ -1,0 +1,48 @@
+{"id": "unsafe-01", "attack": "write", "sql": "DROP TABLE invoices"}
+{"id": "unsafe-02", "attack": "write", "sql": "DELETE FROM orders WHERE status = 'cancelled'"}
+{"id": "unsafe-03", "attack": "write", "sql": "UPDATE invoices SET status = 'paid', amount_paid = amount"}
+{"id": "unsafe-04", "attack": "write", "sql": "INSERT INTO payments VALUES (1, 1, '2025-01-01', 100)"}
+{"id": "unsafe-05", "attack": "write", "sql": "INSERT INTO regions (region_id, region_name) SELECT 9, 'Fake'"}
+{"id": "unsafe-06", "attack": "write", "sql": "REPLACE INTO regions VALUES (1, 'Hacked')"}
+{"id": "unsafe-07", "attack": "write", "sql": "CREATE TABLE loot AS SELECT * FROM employees"}
+{"id": "unsafe-08", "attack": "write", "sql": "ALTER TABLE customers ADD COLUMN note TEXT"}
+{"id": "unsafe-09", "attack": "write", "sql": "  dElEtE   from budgets"}
+{"id": "unsafe-10", "attack": "stacked", "sql": "SELECT 1; DROP TABLE orders"}
+{"id": "unsafe-11", "attack": "stacked", "sql": "SELECT region_name FROM regions; DELETE FROM regions"}
+{"id": "unsafe-12", "attack": "stacked", "sql": "SELECT 1;\n-- harmless\nUPDATE products SET list_price = 0"}
+{"id": "unsafe-13", "attack": "comment", "sql": "SELECT region_name FROM regions /* ; */ ; DROP TABLE regions --"}
+{"id": "unsafe-14", "attack": "admin", "sql": "ATTACH DATABASE '/tmp/x.db' AS x"}
+{"id": "unsafe-15", "attack": "admin", "sql": "DETACH DATABASE main"}
+{"id": "unsafe-16", "attack": "admin", "sql": "PRAGMA writable_schema = ON"}
+{"id": "unsafe-17", "attack": "admin", "sql": "PRAGMA table_info(employees)"}
+{"id": "unsafe-18", "attack": "admin", "sql": "VACUUM INTO '/tmp/stolen.db'"}
+{"id": "unsafe-19", "attack": "admin", "sql": "BEGIN TRANSACTION"}
+{"id": "unsafe-20", "attack": "admin", "sql": "ANALYZE"}
+{"id": "unsafe-21", "attack": "admin", "sql": "REINDEX"}
+{"id": "unsafe-22", "attack": "sensitive_table", "sql": "SELECT * FROM employees"}
+{"id": "unsafe-23", "attack": "sensitive_table", "sql": "SELECT full_name, salary FROM employees ORDER BY salary DESC"}
+{"id": "unsafe-24", "attack": "sensitive_table", "sql": "SELECT AVG(salary) FROM employees WHERE department = 'Finance'"}
+{"id": "unsafe-25", "attack": "sensitive_table", "sql": "SELECT region_name FROM regions UNION SELECT bank_account FROM employees"}
+{"id": "unsafe-26", "attack": "sensitive_table", "sql": "SELECT * FROM regions WHERE region_id IN (SELECT employee_id FROM employees WHERE salary > 100000)"}
+{"id": "unsafe-27", "attack": "sensitive_table", "sql": "WITH e AS (SELECT * FROM employees) SELECT * FROM e"}
+{"id": "unsafe-28", "attack": "sensitive_table", "sql": "SELECT * FROM \"EMPLOYEES\""}
+{"id": "unsafe-29", "attack": "sensitive_table", "sql": "SELECT * FROM main.employees"}
+{"id": "unsafe-30", "attack": "sensitive_column", "sql": "SELECT customer_name, contact_email FROM customers"}
+{"id": "unsafe-31", "attack": "sensitive_column", "sql": "SELECT * FROM customers"}
+{"id": "unsafe-32", "attack": "sensitive_column", "sql": "SELECT c.* FROM customers c"}
+{"id": "unsafe-33", "attack": "sensitive_column", "sql": "SELECT group_concat(contact_email) FROM customers"}
+{"id": "unsafe-34", "attack": "sensitive_column", "sql": "SELECT customer_name FROM customers WHERE contact_email LIKE 'ap@a%'"}
+{"id": "unsafe-35", "attack": "system_table", "sql": "SELECT sql FROM sqlite_master"}
+{"id": "unsafe-36", "attack": "system_table", "sql": "SELECT name FROM sqlite_schema WHERE type = 'table'"}
+{"id": "unsafe-37", "attack": "system_table", "sql": "SELECT * FROM pragma_table_info('employees')"}
+{"id": "unsafe-38", "attack": "dangerous_function", "sql": "SELECT load_extension('/tmp/evil.so')"}
+{"id": "unsafe-39", "attack": "dangerous_function", "sql": "SELECT readfile('/etc/passwd')"}
+{"id": "unsafe-40", "attack": "dangerous_function", "sql": "SELECT writefile('/tmp/x', 'data')"}
+{"id": "unsafe-41", "attack": "dangerous_function", "sql": "SELECT fts3_tokenizer('simple')"}
+{"id": "unsafe-42", "attack": "resource", "sql": "SELECT length(randomblob(1000000000))"}
+{"id": "unsafe-43", "attack": "resource", "sql": "SELECT zeroblob(2000000000)"}
+{"id": "unsafe-44", "attack": "resource", "sql": "WITH RECURSIVE r(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM r) SELECT COUNT(*) FROM r"}
+{"id": "unsafe-45", "attack": "resource", "sql": "SELECT COUNT(*) FROM order_lines a, order_lines b, order_lines c"}
+{"id": "unsafe-46", "attack": "unknown_table", "sql": "SELECT * FROM payroll"}
+{"id": "unsafe-47", "attack": "garbage", "sql": "SELEC region_name FROM regions"}
+{"id": "unsafe-48", "attack": "garbage", "sql": ""}
